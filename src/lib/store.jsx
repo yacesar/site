@@ -5,7 +5,7 @@ const STORAGE_KEY = 'dk620-bancada-db-v1';
 
 export function createInitialDb() {
   return {
-    versao: 2,
+    versao: 3,
     ...structuredClone(seedData),
     statusComponentes: {},
     notasComponentes: {},
@@ -30,11 +30,15 @@ export function normalizeDb(raw) {
     pendenciasLevantamento: Array.isArray(raw.pendenciasLevantamento) ? raw.pendenciasLevantamento : base.pendenciasLevantamento,
     registrosReparo: Array.isArray(raw.registrosReparo) ? raw.registrosReparo : base.registrosReparo,
   };
-  // v1 → v2: acrescenta as pendências novas (7 e 8) sem mexer nas existentes.
-  if ((raw.versao || 1) < 2) {
-    const ids = new Set(db.pendenciasLevantamento.map((p) => p.id));
-    base.pendenciasLevantamento.filter((p) => p.id >= 7 && !ids.has(p.id)).forEach((p) => db.pendenciasLevantamento.push(p));
-  }
+  // Pendências acrescentadas em cada versão; entram sem mexer nas existentes.
+  const novasPorVersao = { 2: [7, 8], 3: [9] };
+  const ids = new Set(db.pendenciasLevantamento.map((p) => p.id));
+  Object.entries(novasPorVersao).forEach(([v, novas]) => {
+    if ((raw.versao || 1) >= Number(v)) return;
+    base.pendenciasLevantamento
+      .filter((p) => novas.includes(p.id) && !ids.has(p.id))
+      .forEach((p) => db.pendenciasLevantamento.push(p));
+  });
   db.versao = base.versao;
   return db;
 }

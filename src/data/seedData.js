@@ -138,6 +138,12 @@ export const seedData = {
       concluido: false,
       notas: 'Anel apareceu solto no vídeo. Entrada de água causou a falha da tecla 9; conferir e trocar a vedação na reinstalação.',
     },
+    {
+      id: 9,
+      item: 'Quem gera o texto do LCD: validador ou o próprio teclado?',
+      concluido: false,
+      notas: 'Confirmado que o LCD mostra mensagens ("TRECHO:", "De:/Para:", "NAO ENCONTRADO"). Falta saber se o número digitado é ecoado localmente ou pelo validador. Teste: na bancada, ligar só 24V e observar o LCD; depois capturar no Simulador o que o teclado envia ao apertar teclas.',
+    },
   ],
   registrosReparo: [
     {

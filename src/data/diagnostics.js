@@ -77,7 +77,7 @@ export const LCD_MESSAGES = [
   {
     linhas: ['TRECHO:', ''],
     quando: 'Tela de espera: o validador pede o número do trecho.',
-    significa: 'Teclado alimentado, LCD e comunicação com o validador funcionando.',
+    significa: 'Confirmado em campo: o LCD exibe texto vindo do validador. Teclado alimentado e caminho RX (fio branco → U4 → TP2 → processador) funcionando.',
     tipo: 'ok',
   },
   {
@@ -176,6 +176,8 @@ export const SYMPTOMS = [
     resumo: 'Backlight aceso, mas sem caracteres ou só blocos.',
     subsistema: 'fonte',
     passos: [
+      { t: 'Primeiro confirme onde está testando: o texto do LCD (ex.: "TRECHO:") é enviado pelo validador. Na bancada, sem validador, a tela vazia pode ser normal.', esperado: 'No ônibus (ou com outro teclado bom na mesma bancada) aparece "TRECHO:"', se: 'Teclado bom também fica sem texto na bancada: não é defeito. Teste no ônibus.' },
+      { t: 'No ônibus, sem texto: confira o fio branco (RX) e a cadeia C15 → R19 → U4 pino 13 → pino 12 → R21 → TP2.', esperado: 'TP2 em +5V com pulsos ao chegar dados', se: 'Sem pulsos em TP2 com dados no fio branco: U4 (receptor) ou R19/R21.' },
       { t: 'Meça TP8.', esperado: '+5,0V estável', se: 'Baixo/oscilando: fonte step-down (C18, L1, D4, D5).' },
       { t: 'Retire o LCD (4 parafusos) e inspecione o soquete J2 de 16 pinos.', esperado: 'Pinos limpos e firmes', se: 'Oxidação/mau contato: limpe e reencaixe.' },
       { t: 'Verifique o ajuste de contraste do LCD, se houver trimpot.', esperado: 'Caracteres visíveis', se: 'Só blocos cheios: contraste ou LCD não inicializado.' },
