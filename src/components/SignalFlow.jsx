@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Workflow, ChevronRight, ChevronDown, Stethoscope, CheckSquare, Square, ArrowRight, Monitor } from 'lucide-react';
-import { SUBSYSTEMS, SYMPTOMS, LCD_MESSAGES } from '../data/diagnostics';
+import { SUBSYSTEMS, SYMPTOMS, LCD_MESSAGES, VALIDATOR_SCREENS, VALIDATOR_LEGEND } from '../data/diagnostics';
 import { SectionTitle } from './ui';
 
 const GROUPS = [
@@ -107,6 +107,33 @@ export default function SignalFlow({ onOpenTab }) {
               </div>
             </div>
           ))}
+        </div>
+
+        <div className="panel p-4 mt-3">
+          <h3 className="font-semibold text-slate-100">Tela do validador ao receber o trecho</h3>
+          <p className="text-sm text-slate-400 mt-0.5 mb-3">
+            Teste de ponta a ponta: digite o trecho no DK620 → o validador mostra as tarifas (envio ok) → o teclado mostra “De:/Para:” (recepção ok).
+          </p>
+          <div className="flex flex-col lg:flex-row gap-4">
+            <div className="flex flex-col sm:flex-row gap-3 shrink-0">
+              {VALIDATOR_SCREENS.map((v) => (
+                <div key={v.linhas[0]} className="rounded-lg bg-[#1565d8] border-4 border-[#0b1636] px-3 py-2 w-full sm:w-56 text-[#eef4ff] self-start">
+                  {v.linhas.map((l, i) => (
+                    <div key={i} className={`whitespace-pre ${i === 0 ? 'text-lg' : 'text-[15px]'} leading-7`}>{l}</div>
+                  ))}
+                  <div className="text-[10px] opacity-75 mt-3">Prefixo: ······ - Data: dd/mm/aa hh:mm</div>
+                </div>
+              ))}
+            </div>
+            <dl className="text-sm grid gap-2 min-w-0">
+              {VALIDATOR_LEGEND.map(([k, v]) => (
+                <div key={k}>
+                  <dt className="font-mono text-amber-300 text-xs">{k}</dt>
+                  <dd className="text-slate-300">{v}</dd>
+                </div>
+              ))}
+            </dl>
+          </div>
         </div>
       </section>
 

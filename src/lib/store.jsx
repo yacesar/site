@@ -5,7 +5,7 @@ const STORAGE_KEY = 'dk620-bancada-db-v1';
 
 export function createInitialDb() {
   return {
-    versao: 5,
+    versao: 6,
     ...structuredClone(seedData),
     statusComponentes: {},
     notasComponentes: {},
@@ -51,6 +51,13 @@ export function normalizeDb(raw) {
   if ((raw.versao || 1) < 5) {
     const p9 = db.pendenciasLevantamento.find((p) => p.id === 9);
     if (p9 && !p9.concluido && p9.notas.startsWith('Confirmado que o LCD mostra mensagens')) {
+      p9.notas = base.pendenciasLevantamento.find((p) => p.id === 9).notas;
+    }
+  }
+  // v6: pendência 9 também registra que o trecho chega ao validador.
+  if ((raw.versao || 1) < 6) {
+    const p9 = db.pendenciasLevantamento.find((p) => p.id === 9);
+    if (p9 && !p9.concluido && p9.notas.startsWith('Confirmado: "De:/Para:"') && !p9.notas.includes('chega ao validador')) {
       p9.notas = base.pendenciasLevantamento.find((p) => p.id === 9).notas;
     }
   }

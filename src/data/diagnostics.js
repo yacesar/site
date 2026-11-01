@@ -100,6 +100,20 @@ export const LCD_MESSAGES = [
   },
 ];
 
+// Telas do validador (OM-7000) quando o trecho chega pelo DK620. Fotos de
+// 07/10/2026; valores servem só de exemplo de formato.
+export const VALIDATOR_SCREENS = [
+  { linhas: ['Trecho 9:', 'VENDA A  7,50 041', 'VT-CONVE 7,50 046', 'EXPRESSO 7,50 005'] },
+  { linhas: ['Trecho 18:', 'VENDA A  14,45 001'] },
+];
+
+export const VALIDATOR_LEGEND = [
+  ['Trecho N:', 'O número digitado no DK620. Se aparece aqui, o envio (TX) do teclado funcionou.'],
+  ['VENDA A / VT-CONVE / EXPRESSO', 'Tipos de tarifa do trecho, com o valor em R$. Alguns trechos têm só uma tarifa.'],
+  ['Número de 3 dígitos', 'Provavelmente contador por tarifa (a confirmar).'],
+  ['Prefixo / Data', 'Número do carro e relógio do validador (rodapé da tela).'],
+];
+
 // Sintomas → testes na ordem em que devem ser feitos.
 export const SYMPTOMS = [
   {
@@ -121,7 +135,7 @@ export const SYMPTOMS = [
     resumo: 'Liga, mas o validador não recebe as teclas ou não envia mensagens.',
     subsistema: 'tx',
     passos: [
-      { t: 'Teste rápido no ônibus: digite um trecho e confirme. Depois troque a linha no validador e repita.', esperado: '"De:/Para:" mostra a linha selecionada no validador e acompanha a troca', se: 'Número aparece mas "De:/Para:" nunca vem: falha em TX (teclado → validador) ou RX (validador → teclado). Siga os passos abaixo.' },
+      { t: 'Teste de ponta a ponta no ônibus: digite um trecho no DK620 e confirme. Olhe a tela do validador e depois o LCD do teclado.', esperado: 'Validador mostra "Trecho N:" com as tarifas (TX ok) e o teclado mostra "De:/Para:" da linha selecionada (RX ok)', se: 'Validador não muda: falha no envio (U4 pino 14, R25, C17, fio verde). Validador muda mas "De:/Para:" não chega: falha na recepção (fio branco, C15, R19, U4 pinos 13/12, TP2).' },
       { t: 'Inspecione U4 (ST232C) — especialmente entre os pinos 13 (RX) e 14 (TX) — e o borne.', esperado: 'Sem oxidação', se: 'Oxidação: limpeza química com álcool isopropílico 99,8% (caso REP-001).' },
       { t: 'Ponta preta no Pino 15 do U4. Meça o Pino 16.', esperado: '+5V', se: 'Sem 5V: voltar ao diagnóstico “Não liga”.' },
       { t: 'Meça Pino 2 (V+) e Pino 6 (V−) do U4.', esperado: '+8,5V a +10V / −8,5V a −10V', se: 'Fora da faixa: bomba de carga do U4 (capacitores externos) ou U4 defeituoso.' },
