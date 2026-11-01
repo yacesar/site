@@ -126,6 +126,18 @@ export const seedData = {
       concluido: true,
       notas: 'Mapeado: Driver chaveador do backlight do LCD (Pino 15 de J2) e dos LEDs D1-D6 das teclas (R28 e R36 = 4,7 kΩ).',
     },
+    {
+      id: 7,
+      item: 'Origem dos blocos (█) no fim das linhas do LCD em "De:/Para:"',
+      concluido: false,
+      notas: 'Vistos no vídeo de 20/10/2026 com o teclado funcionando. Digitar o mesmo trecho em outro DK620: se repetir, é dado do validador, não defeito do LCD.',
+    },
+    {
+      id: 8,
+      item: 'Vedação (anel de borracha) da caixa / compartimento OM-7000',
+      concluido: false,
+      notas: 'Anel apareceu solto no vídeo. Entrada de água causou a falha da tecla 9; conferir e trocar a vedação na reinstalação.',
+    },
   ],
   registrosReparo: [
     {

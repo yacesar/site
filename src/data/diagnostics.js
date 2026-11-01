@@ -71,6 +71,35 @@ export const SUBSYSTEMS = [
   },
 ];
 
+// Mensagens do LCD observadas em operação normal no ônibus (vídeo de 20/10/2026,
+// teclado montado sobre o OM-7000). Servem de referência de funcionamento.
+export const LCD_MESSAGES = [
+  {
+    linhas: ['TRECHO:', ''],
+    quando: 'Tela de espera: o validador pede o número do trecho.',
+    significa: 'Teclado alimentado, LCD e comunicação com o validador funcionando.',
+    tipo: 'ok',
+  },
+  {
+    linhas: ['TRECHO:8', ''],
+    quando: 'Cada tecla numérica aparece logo após o "TRECHO:".',
+    significa: 'Tecla registrada: pastilha, U1, conector de 12 pinos e processador ok. Se um número não aparece, teste aquela tecla no Testador de Teclas.',
+    tipo: 'ok',
+  },
+  {
+    linhas: ['De: M.PEREIR████', 'Para: TRES RIO██'],
+    quando: 'Depois de confirmar um trecho cadastrado, o validador devolve origem e destino.',
+    significa: 'Comunicação nos dois sentidos ok (TX e RX do U4). Os blocos (█) nas colunas finais também aparecem com o teclado funcionando: provavelmente caracteres do nome que o LCD não reconhece. Confirme em outro DK620 antes de suspeitar do LCD.',
+    tipo: 'info',
+  },
+  {
+    linhas: ['NAO ENCONTRADO', ''],
+    quando: 'O trecho digitado não existe na tabela da linha.',
+    significa: 'Resposta normal do validador. É uma questão de dados/cadastro, não defeito do teclado.',
+    tipo: 'info',
+  },
+];
+
 // Sintomas → testes na ordem em que devem ser feitos.
 export const SYMPTOMS = [
   {
@@ -113,6 +142,19 @@ export const SYMPTOMS = [
       { t: 'Meça +5V no U1 da BD4039.', esperado: '+5V', se: 'Sem 5V: conector/cabo entre as placas.' },
       { t: 'Meça R1, R16, R13 e R7 e a continuidade até o conector.', esperado: 'Valores iguais', se: 'Diferente/aberto: substitua o resistor.' },
       { t: 'Meça TP4 e TP6 na placa principal.', esperado: '+5V em repouso', se: 'Sem variação ao pressionar com U1 alimentado: suspeita no U1.' },
+    ],
+  },
+  {
+    id: 'agua',
+    titulo: 'Uma tecla não funciona (água/umidade)',
+    resumo: 'Uma tecla específica não responde; as outras e o LCD estão normais.',
+    subsistema: 'teclas',
+    passos: [
+      { t: 'No ônibus, digite um trecho usando várias teclas e observe se cada número aparece após "TRECHO:".', esperado: 'Todos os números aparecem', se: 'Só um número falha: suspeita localizada naquela tecla.' },
+      { t: 'Desmonte e procure água ou umidade sob a membrana, na manta de silicone e na trilha da tecla.', esperado: 'Seco e limpo', se: 'Água/umidade (caso da tecla 9): seque, limpe com álcool isopropílico e deixe secar bem antes de montar.' },
+      { t: 'Inspecione a trilha interdigitada e a pastilha da tecla com lupa.', esperado: 'Cobre brilhante, sem manchas', se: 'Oxidação ou resíduo: limpe; trilha corroída exige reparo da trilha.' },
+      { t: 'Meça a continuidade da trilha com a manta pressionada (Testador de Teclas).', esperado: 'Continuidade ao pressionar', se: 'Sem continuidade depois de limpo: pastilha da manta gasta.' },
+      { t: 'Verifique a vedação (anel de borracha) e as juntas da caixa antes de reinstalar.', esperado: 'Vedação inteira e assentada', se: 'Vedação solta ou deformada: recoloque ou troque para evitar reincidência.' },
     ],
   },
   {

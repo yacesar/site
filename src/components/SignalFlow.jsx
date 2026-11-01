@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import { Workflow, ChevronRight, ChevronDown, Stethoscope, CheckSquare, Square, ArrowRight } from 'lucide-react';
-import { SUBSYSTEMS, SYMPTOMS } from '../data/diagnostics';
+import { Workflow, ChevronRight, ChevronDown, Stethoscope, CheckSquare, Square, ArrowRight, Monitor } from 'lucide-react';
+import { SUBSYSTEMS, SYMPTOMS, LCD_MESSAGES } from '../data/diagnostics';
 import { SectionTitle } from './ui';
 
 const GROUPS = [
@@ -90,11 +90,33 @@ export default function SignalFlow({ onOpenTab }) {
 
       <section>
         <SectionTitle
+          icon={Monitor}
+          title="Mensagens do LCD em operação normal"
+          subtitle="Referência registrada com o teclado instalado no ônibus (sobre o OM-7000). Compare com o que o teclado em teste mostra."
+        />
+        <div className="grid gap-3 md:grid-cols-2">
+          {LCD_MESSAGES.map((m) => (
+            <div key={m.linhas[0]} className="panel p-4 flex flex-col sm:flex-row gap-4">
+              <div className="shrink-0 self-start rounded-lg bg-[#1d3fbf] border-4 border-[#0b1636] px-3 py-2 font-mono text-[15px] leading-6 text-[#dfe8ff] tracking-wider w-full sm:w-[14.5rem]" aria-label={`LCD: ${m.linhas.join(' / ')}`}>
+                <div className="whitespace-pre">{m.linhas[0].padEnd(16, ' ')}</div>
+                <div className="whitespace-pre">{(m.linhas[1] || '').padEnd(16, ' ')}</div>
+              </div>
+              <div className="text-sm min-w-0">
+                <p className="text-slate-300">{m.quando}</p>
+                <p className={`mt-1.5 ${m.tipo === 'ok' ? 'text-green-300' : 'text-sky-300'}`}>{m.significa}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <section>
+        <SectionTitle
           icon={Stethoscope}
           title="Assistente de resolução de problemas"
           subtitle="Escolha o sintoma. Os testes aparecem na ordem certa — marque cada um conforme avança."
         />
-        <div className="grid gap-2 sm:grid-cols-2 lg:grid-cols-5 mb-4">
+        <div className="grid gap-2 sm:grid-cols-2 lg:grid-cols-3 mb-4">
           {SYMPTOMS.map((s) => (
             <button
               key={s.id}
