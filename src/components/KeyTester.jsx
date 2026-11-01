@@ -80,6 +80,11 @@ export default function KeyTester() {
           <p className="text-xs text-slate-400 mb-3">
             {KEY_ROWS[key.row]} · marcação na placa: <span className="font-mono text-amber-300">{key.pcb}</span>
           </p>
+          {key.operacao && (
+            <p className="text-xs text-green-200 bg-green-500/10 border border-green-500/30 rounded-md px-2.5 py-2 mb-3">
+              <b>Na operação:</b> {key.operacao}
+            </p>
+          )}
           <ol className="space-y-2.5 text-sm text-slate-300 list-decimal pl-5 marker:text-amber-400">
             <li>Desligue o teclado e separe a manta de silicone da placa <span className="font-mono">BD4039 REV01</span>.</li>
             <li>Inspecione a trilha interdigitada (pente duplo de cobre) da tecla <b>{key.pcb}</b>: procure oxidação, sujeira ou trilha interrompida. Limpe com álcool isopropílico.</li>

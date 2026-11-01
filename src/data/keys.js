@@ -19,7 +19,10 @@ export const KEYS = [
   { id: 'kF3', label: 'F3', sub: '▶', pcb: 'F3', row: 1, col: 6, func: true },
   // Extremidades inferiores
   { id: 'kX', label: 'X', sub: 'Cancelar', pcb: 'X', row: 2, col: 0, color: 'red' },
-  { id: 'kV', label: '✓', sub: 'Confirmar', pcb: 'V', row: 2, col: 1, color: 'green' },
+  {
+    id: 'kV', label: '✓', sub: 'Confirmar', pcb: 'V', row: 2, col: 1, color: 'green',
+    operacao: 'Tecla de OK/liberar. 1 toque: validador fica em espera pelo cartão (roleta libera com o cartão aceito). 2 toques: libera a roleta direto, para pagante em dinheiro.',
+  },
 ];
 
 // Posição de cada tecla num viewBox 1000 x 460, em arco (bordas mais altas).
