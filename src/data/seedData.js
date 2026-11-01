@@ -142,7 +142,7 @@ export const seedData = {
       id: 9,
       item: 'Quem gera o texto do LCD: validador ou o próprio teclado?',
       concluido: false,
-      notas: 'Confirmado que o LCD mostra mensagens ("TRECHO:", "De:/Para:", "NAO ENCONTRADO"). Falta saber se o número digitado é ecoado localmente ou pelo validador. Teste: na bancada, ligar só 24V e observar o LCD; depois capturar no Simulador o que o teclado envia ao apertar teclas.',
+      notas: 'Confirmado: "De:/Para:" mostra a linha selecionada no validador (ex.: Miguel Pereira × Três Rios, Arcozelo × Japeri), então esse texto vem do validador. Falta saber se "TRECHO:" e o número digitado são gerados no teclado ou pelo validador. Teste: na bancada, ligar só 24V e observar o LCD; depois capturar no Simulador o que o teclado envia ao apertar teclas.',
     },
   ],
   registrosReparo: [

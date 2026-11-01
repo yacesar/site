@@ -88,13 +88,13 @@ export const LCD_MESSAGES = [
   },
   {
     linhas: ['De: M.PEREIR████', 'Para: TRES RIO██'],
-    quando: 'Depois de confirmar um trecho cadastrado, o validador devolve origem e destino.',
+    quando: 'Depois de confirmar um trecho, o validador devolve a linha que está selecionada nele (ex.: Miguel Pereira × Três Rios, Arcozelo × Japeri). Trocou a linha no validador, muda aqui também.',
     significa: 'Comunicação nos dois sentidos ok (TX e RX do U4). Os blocos (█) no fim das linhas são normais: indicam digitação em espera (campo aguardando entrada). Não é defeito do LCD.',
     tipo: 'info',
   },
   {
     linhas: ['NAO ENCONTRADO', ''],
-    quando: 'O trecho digitado não existe na tabela da linha.',
+    quando: 'O trecho digitado não existe na tabela da linha selecionada no validador.',
     significa: 'Resposta normal do validador. É uma questão de dados/cadastro, não defeito do teclado.',
     tipo: 'info',
   },
@@ -121,6 +121,7 @@ export const SYMPTOMS = [
     resumo: 'Liga, mas o validador não recebe as teclas ou não envia mensagens.',
     subsistema: 'tx',
     passos: [
+      { t: 'Teste rápido no ônibus: digite um trecho e confirme. Depois troque a linha no validador e repita.', esperado: '"De:/Para:" mostra a linha selecionada no validador e acompanha a troca', se: 'Número aparece mas "De:/Para:" nunca vem: falha em TX (teclado → validador) ou RX (validador → teclado). Siga os passos abaixo.' },
       { t: 'Inspecione U4 (ST232C) — especialmente entre os pinos 13 (RX) e 14 (TX) — e o borne.', esperado: 'Sem oxidação', se: 'Oxidação: limpeza química com álcool isopropílico 99,8% (caso REP-001).' },
       { t: 'Ponta preta no Pino 15 do U4. Meça o Pino 16.', esperado: '+5V', se: 'Sem 5V: voltar ao diagnóstico “Não liga”.' },
       { t: 'Meça Pino 2 (V+) e Pino 6 (V−) do U4.', esperado: '+8,5V a +10V / −8,5V a −10V', se: 'Fora da faixa: bomba de carga do U4 (capacitores externos) ou U4 defeituoso.' },
