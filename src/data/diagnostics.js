@@ -108,10 +108,18 @@ export const VALIDATOR_SCREENS = [
 ];
 
 export const VALIDATOR_LEGEND = [
-  ['Trecho N:', 'O número digitado no DK620. Se aparece aqui, o envio (TX) do teclado funcionou.'],
-  ['VENDA A / VT-CONVE / EXPRESSO', 'Tipos de tarifa do trecho, com o valor em R$. Alguns trechos têm só uma tarifa.'],
-  ['Número de 3 dígitos', 'Provavelmente contador por tarifa (a confirmar).'],
+  ['Trecho N:', 'A seção acionada no DK620. Se aparece aqui, o envio (TX) do teclado funcionou.'],
+  ['VENDA A / VT-CONVE / EXPRESSO', 'Tipos de tarifa da seção, com o valor em R$. Algumas seções têm só uma tarifa.'],
+  ['Número de 3 dígitos', 'Total de vendas daquela tarifa na seção (tela de totais exibida quando a seção é acionada).'],
   ['Prefixo / Data', 'Número do carro e relógio do validador (rodapé da tela).'],
+];
+
+// Fluxo de operação do motorista com o DK620 (informado pela equipe de campo).
+export const OPERATION_FLOW = [
+  { t: 'Digitar a seção (trecho)', d: 'O número aparece no LCD do teclado após "TRECHO:".' },
+  { t: 'Seção acionada', d: 'O teclado mostra só a seção e o valor; o validador mostra a tela de totais de vendas da seção.' },
+  { t: '1 toque em liberar', d: 'Libera o validador para o passageiro encostar o cartão; com o cartão aceito, a roleta é liberada.' },
+  { t: '2 toques em OK', d: 'Libera a roleta direto, para pagante em dinheiro.' },
 ];
 
 // Sintomas → testes na ordem em que devem ser feitos.
@@ -135,7 +143,8 @@ export const SYMPTOMS = [
     resumo: 'Liga, mas o validador não recebe as teclas ou não envia mensagens.',
     subsistema: 'tx',
     passos: [
-      { t: 'Teste de ponta a ponta no ônibus: digite um trecho no DK620 e confirme. Olhe a tela do validador e depois o LCD do teclado.', esperado: 'Validador mostra "Trecho N:" com as tarifas (TX ok) e o teclado mostra "De:/Para:" da linha selecionada (RX ok)', se: 'Validador não muda: falha no envio (U4 pino 14, R25, C17, fio verde). Validador muda mas "De:/Para:" não chega: falha na recepção (fio branco, C15, R19, U4 pinos 13/12, TP2).' },
+      { t: 'Teste de ponta a ponta no ônibus: digite uma seção no DK620 e confirme. Olhe a tela do validador e depois o LCD do teclado.', esperado: 'Validador mostra "Trecho N:" com as tarifas (TX ok) e o teclado mostra seção e valor / "De:/Para:" (RX ok)', se: 'Validador não muda: falha no envio (U4 pino 14, R25, C17, fio verde). Validador muda mas nada volta ao LCD: falha na recepção (fio branco, C15, R19, U4 pinos 13/12, TP2).' },
+      { t: 'Complete o ciclo: 2 toques em OK (pagante em dinheiro) e 1 toque em liberar + cartão.', esperado: 'A roleta libera nos dois casos', se: 'Um dos modos não libera: teste a tecla correspondente no Testador de Teclas antes de suspeitar do validador/roleta.' },
       { t: 'Inspecione U4 (ST232C) — especialmente entre os pinos 13 (RX) e 14 (TX) — e o borne.', esperado: 'Sem oxidação', se: 'Oxidação: limpeza química com álcool isopropílico 99,8% (caso REP-001).' },
       { t: 'Ponta preta no Pino 15 do U4. Meça o Pino 16.', esperado: '+5V', se: 'Sem 5V: voltar ao diagnóstico “Não liga”.' },
       { t: 'Meça Pino 2 (V+) e Pino 6 (V−) do U4.', esperado: '+8,5V a +10V / −8,5V a −10V', se: 'Fora da faixa: bomba de carga do U4 (capacitores externos) ou U4 defeituoso.' },

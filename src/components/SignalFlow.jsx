@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Workflow, ChevronRight, ChevronDown, Stethoscope, CheckSquare, Square, ArrowRight, Monitor } from 'lucide-react';
-import { SUBSYSTEMS, SYMPTOMS, LCD_MESSAGES, VALIDATOR_SCREENS, VALIDATOR_LEGEND } from '../data/diagnostics';
+import { SUBSYSTEMS, SYMPTOMS, LCD_MESSAGES, VALIDATOR_SCREENS, VALIDATOR_LEGEND, OPERATION_FLOW } from '../data/diagnostics';
 import { SectionTitle } from './ui';
 
 const GROUPS = [
@@ -110,9 +110,9 @@ export default function SignalFlow({ onOpenTab }) {
         </div>
 
         <div className="panel p-4 mt-3">
-          <h3 className="font-semibold text-slate-100">Tela do validador ao receber o trecho</h3>
+          <h3 className="font-semibold text-slate-100">Tela do validador ao acionar a seção (totais de vendas)</h3>
           <p className="text-sm text-slate-400 mt-0.5 mb-3">
-            Teste de ponta a ponta: digite o trecho no DK620 → o validador mostra as tarifas (envio ok) → o teclado mostra “De:/Para:” (recepção ok).
+            Teste de ponta a ponta: digite a seção no DK620 → o validador mostra as tarifas e totais (envio ok) → o teclado mostra seção e valor (recepção ok).
           </p>
           <div className="flex flex-col lg:flex-row gap-4">
             <div className="flex flex-col sm:flex-row gap-3 shrink-0">
@@ -134,6 +134,21 @@ export default function SignalFlow({ onOpenTab }) {
               ))}
             </dl>
           </div>
+        </div>
+
+        <div className="panel p-4 mt-3">
+          <h3 className="font-semibold text-slate-100 mb-3">Fluxo de operação do motorista</h3>
+          <ol className="grid gap-2 sm:grid-cols-2 lg:grid-cols-4">
+            {OPERATION_FLOW.map((f, i) => (
+              <li key={f.t} className="rounded-lg border border-bench-600 bg-bench-900 p-3">
+                <div className="text-sm font-semibold text-slate-100">
+                  <span className="text-amber-300 mr-1">{i + 1}.</span>{f.t}
+                </div>
+                <p className="text-xs text-slate-400 mt-1">{f.d}</p>
+              </li>
+            ))}
+          </ol>
+          <p className="text-xs text-slate-500 mt-3">Testar os dois modos de liberação no ônibus confirma teclas, comunicação e validador de uma vez.</p>
         </div>
       </section>
 
