@@ -89,7 +89,7 @@ export const LCD_MESSAGES = [
   {
     linhas: ['De: M.PEREIR████', 'Para: TRES RIO██'],
     quando: 'Depois de confirmar um trecho cadastrado, o validador devolve origem e destino.',
-    significa: 'Comunicação nos dois sentidos ok (TX e RX do U4). Os blocos (█) nas colunas finais também aparecem com o teclado funcionando: provavelmente caracteres do nome que o LCD não reconhece. Confirme em outro DK620 antes de suspeitar do LCD.',
+    significa: 'Comunicação nos dois sentidos ok (TX e RX do U4). Os blocos (█) no fim das linhas são normais: indicam digitação em espera (campo aguardando entrada). Não é defeito do LCD.',
     tipo: 'info',
   },
   {
@@ -180,7 +180,7 @@ export const SYMPTOMS = [
       { t: 'No ônibus, sem texto: confira o fio branco (RX) e a cadeia C15 → R19 → U4 pino 13 → pino 12 → R21 → TP2.', esperado: 'TP2 em +5V com pulsos ao chegar dados', se: 'Sem pulsos em TP2 com dados no fio branco: U4 (receptor) ou R19/R21.' },
       { t: 'Meça TP8.', esperado: '+5,0V estável', se: 'Baixo/oscilando: fonte step-down (C18, L1, D4, D5).' },
       { t: 'Retire o LCD (4 parafusos) e inspecione o soquete J2 de 16 pinos.', esperado: 'Pinos limpos e firmes', se: 'Oxidação/mau contato: limpe e reencaixe.' },
-      { t: 'Verifique o ajuste de contraste do LCD, se houver trimpot.', esperado: 'Caracteres visíveis', se: 'Só blocos cheios: contraste ou LCD não inicializado.' },
+      { t: 'Verifique o ajuste de contraste do LCD, se houver trimpot.', esperado: 'Caracteres visíveis', se: 'Linha inteira de blocos cheios: contraste ou LCD não inicializado. (Poucos blocos no fim de "De:/Para:" são normais: digitação em espera.)' },
       { t: 'Meça TP3 (debug).', esperado: '+5V em repouso', se: 'Anormal: suspeita no processador (código ainda a levantar).' },
       { t: 'Troque por um LCD 16x2 sabidamente bom.', esperado: 'Texto aparece', se: 'Continua sem texto: processador/oscilador.' },
     ],

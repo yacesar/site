@@ -129,8 +129,8 @@ export const seedData = {
     {
       id: 7,
       item: 'Origem dos blocos (█) no fim das linhas do LCD em "De:/Para:"',
-      concluido: false,
-      notas: 'Vistos no vídeo de 20/10/2026 com o teclado funcionando. Digitar o mesmo trecho em outro DK620: se repetir, é dado do validador, não defeito do LCD.',
+      concluido: true,
+      notas: 'Resolvido: os blocos indicam digitação em espera (campo aguardando entrada). Comportamento normal, não é defeito do LCD.',
     },
     {
       id: 8,

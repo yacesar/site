@@ -5,7 +5,7 @@ const STORAGE_KEY = 'dk620-bancada-db-v1';
 
 export function createInitialDb() {
   return {
-    versao: 3,
+    versao: 4,
     ...structuredClone(seedData),
     statusComponentes: {},
     notasComponentes: {},
@@ -39,6 +39,14 @@ export function normalizeDb(raw) {
       .filter((p) => novas.includes(p.id) && !ids.has(p.id))
       .forEach((p) => db.pendenciasLevantamento.push(p));
   });
+  // v4: pendência 7 (blocos no LCD) foi esclarecida em campo. Só atualiza se
+  // o técnico ainda não mexeu nela.
+  if ((raw.versao || 1) < 4) {
+    const p7 = db.pendenciasLevantamento.find((p) => p.id === 7);
+    if (p7 && !p7.concluido && p7.notas.startsWith('Vistos no vídeo de 20/10/2026')) {
+      Object.assign(p7, base.pendenciasLevantamento.find((p) => p.id === 7));
+    }
+  }
   db.versao = base.versao;
   return db;
 }
